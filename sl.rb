@@ -1,5 +1,6 @@
 require 'httparty'
-require 'digest/md5'
+
+auth = 8c77399c4a1b475b92665e325a8d5e63
 
 def duration(time)
   secs  = time.to_int
@@ -18,27 +19,26 @@ def duration(time)
   end
 end
 
-def build_data(time_window, site, auth_token)
+def build_data(time_window, site, auth_token, count)
   api_url = 'http://api.sl.se/api2/realtimedeparturesV4.json?key=%&siteid=%&timewindow=%'
   api_url = api_url % [auth_token, site, time_window]
   api_response =  HTTParty.get(api_url, :headers => { "Accept" => "application/json" } )
   api_json = JSON.parse(api_response.body)
   return {} if api_json.empty?
 
-  latest_build = api_json.select{ |build| build['status'] != 'queued' }.first
-  email_hash = Digest::MD5.hexdigest(latest_build['committer_email'])
-  build_id = "#{latest_build['branch']}, build ##{latest_build['build_num']}"
-
-  data = {
-    build_id: build_id,
-    repo: "#{project[:repo]}",
-    branch: "#{latest_build['branch']}",
-    time: "#{calculate_time(latest_build['stop_time'])}",
-    state: "#{latest_build['status'].capitalize}",
-    widget_class: "#{translate_status_to_class(latest_build['status'])}",
-    committer_name: latest_build['committer_name'],
-    commit_body: "\"#{latest_build['body']}\"",
-    avatar_url: "http://www.gravatar.com/avatar/#{email_hash}"
-  }
+  for (x = 1; x < count; x++)
+    time_left = api_json.ResponseData.Metros[x].DisplayTime
+    line = api_json.ResponseData.Metros[x].GroupOfLine
+    dest = api_json.ResponseData.Metros[x].Destination
+    data[x] = {
+      time_left: time_left,
+      line: line,
+      dest: dest,
+    }
   return data
+end
+
+  SCHEDULER.every '10s', :first_in => 0  do
+   data = build_data(60, 9192, auth, 5)
+   send_event(data) unless data.empty?
 end
