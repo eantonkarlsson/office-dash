@@ -38,7 +38,9 @@ SCHEDULER.every '30m', :first_in => 0 do
 
 
   visitors = Array.new
-  visitsum = 0
+  sessions = Array.new
+  bounces = Array.new
+  durations = Array.new
 
   profiles.each do |profile|
     # Execute the query
@@ -47,20 +49,29 @@ SCHEDULER.every '30m', :first_in => 0 do
       'start-date' => startDate,
       'end-date' => endDate,
       # 'dimensions' => "ga:month",
-      'metrics' => "ga:visits",
+      'metrics' => "ga:users, ga:sessions, ga:bounceRate, ga:sessionDuration",
       # 'sort' => "ga:month" 
     })
     
     if visitCount.data.rows[0] and visitCount.data.rows[0][0] # deals with no visits
       visits = visitCount.data.rows[0][0]
+      session = visitCount.data.rows[0][1]
+      bounce = visitCount.data.rows[0][2]
+      duration = visitCount.data.rows[0][3]
+	    
     else
       visits = 0
+      session = 0
+      bounce = 0
+      duration = 0	    
     end
-    visitsum += Integer(visits)
     
-    visitors.push({label: profile[:name], value: visits})
+    visitors.push({label: profile[:name], value: {'Users': visits, 
+	    'Sessions': session, 
+	    'Bounce Rate': bounce, 
+	    'Session Duration': duration}})
+
 end
-  visitors.push({label: "Total", value: visitsum})
 
   # Update the dashboard
   send_event('visitor_count', {items: visitors})
