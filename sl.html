@@ -1,0 +1,16 @@
+<h1 class="title" data-bind="station"></h1>
+<table>
+  <tr>
+    <th>Line</th>
+    <th>Destination</th>
+    <th>Departs</th>
+  </tr>
+  <tr data-id="next_departures" data-foreach-item="next_departures" class="next_departures">
+    <td class="linenumber" data-bind="item.linenumber"></td>
+    <td class="destination" data-bind="item.destination"></td>
+    <td class="displaytime" data-bind="item.time"></td>
+  </tr>
+</table>
+
+<p class="more-info" data-bind="moreinfo"></p>
+<p class="updated-at" data-bind="updatedAtMessage"></p>
