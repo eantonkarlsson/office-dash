@@ -3,26 +3,8 @@ require 'httparty'
 auth = '8c77399c4a1b475b92665e325a8d5e63'
 data = Hash.new
 
-def duration(time)
-  secs  = time.to_int
-  mins  = secs / 60
-  hours = mins / 60
-  days  = hours / 24
-
-  if days > 0
-    "in #{days}d #{hours % 24}h"
-  elsif hours > 0
-    "in #{hours}h #{mins % 60}m"
-  elsif mins > 0
-    "#in {mins}m #{secs % 60}s"
-  elsif secs >= 0
-    "in #{secs}s"
-  end
-end
-
 def build_data(time_window, site, auth_token, count)
-  api_url = 'http://api.sl.se/api2/realtimedeparturesV4.json?key=%&siteid=%&timewindow=%'
-  api_url = api_url % [auth_token, site, time_window]
+  api_url = 'http://api.sl.se/api2/realtimedeparturesV4.json?key=#{auth_token}&siteid=#{site}&timewindow=#{time_window}'
   api_response =  HTTParty.get(api_url, :headers => { "Accept" => "application/json" } )
   api_json = JSON.parse(api_response.body)
   return {} if api_json.empty?
