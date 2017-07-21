@@ -38,9 +38,6 @@ SCHEDULER.every '30m', :first_in => 0 do
 
 
   visitors = Array.new
-  sessions = Array.new
-  bounces = Array.new
-  durations = Array.new
 
   profiles.each do |profile|
     # Execute the query
@@ -66,10 +63,10 @@ SCHEDULER.every '30m', :first_in => 0 do
       duration = 0	    
     end
     
-    visitors.push({label: profile[:name], value: {'Users': visits, 
-	    'Sessions': session, 
-	    'Bounce Rate': bounce, 
-	    'Session Duration': duration}})
+    visitors.push({label: profile[:name], value: {'Users' => visits, 
+	    'Sessions' => session, 
+	    'Bounce Rate' => bounce, 
+	    'Session Duration' => duration}})
 
 end
 
