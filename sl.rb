@@ -39,4 +39,7 @@ SCHEDULER.every '10s', :first_in => 0  do
    dataM, dataB = build_data(60, 9192, auth, 5)
    send_event('slM', {'items': dataM}) unless dataM.empty?
    send_event('slB', {'items': dataB}) unless dataB.empty?
+   dataM2, dataB2 = build_data(60, 9192, auth, 5)
+   send_event('slM2', {'items': dataM2}) unless dataM.empty?
+   send_event('slB2', {'items': dataB2}) unless dataB.empty?
 end
