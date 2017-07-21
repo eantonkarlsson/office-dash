@@ -5,10 +5,10 @@
     <th>Destination</th>
     <th>Departs</th>
   </tr>
-  <tr data-id="next_departures" data-foreach-item="next_departures" class="next_departures">
-    <td class="linenumber" data-bind="item.linenumber"></td>
-    <td class="destination" data-bind="item.destination"></td>
-    <td class="displaytime" data-bind="item.time"></td>
+  <tr data-id="sl_M" data-foreach-item="items" class="next_departures">
+    <td class="linenumber" data-bind="item.line"></td>
+    <td class="destination" data-bind="item.dest"></td>
+    <td class="displaytime" data-bind="item.time_left"></td>
   </tr>
 </table>
 
