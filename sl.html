@@ -5,7 +5,47 @@
     <th>Destination</th>
     <th>Departs</th>
   </tr>
-  <tr data-id="sl_M" data-foreach-item="items" class="next_departures">
+  <tr data-id="slM" data-foreach-item="items" class="next_departures">
+    <td class="linenumber" data-bind="item.line"></td>
+    <td class="destination" data-bind="item.dest"></td>
+    <td class="displaytime" data-bind="item.time_left"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Line</th>
+    <th>Destination</th>
+    <th>Departs</th>
+  </tr>
+  <tr data-id="slB" data-foreach-item="items" class="next_departures">
+    <td class="linenumber" data-bind="item.line"></td>
+    <td class="destination" data-bind="item.dest"></td>
+    <td class="displaytime" data-bind="item.time_left"></td>
+  </tr>
+</table>
+
+<h1 class="title" data-bind="station2"></h1>
+<table>
+  <tr>
+    <th>Line</th>
+    <th>Destination</th>
+    <th>Departs</th>
+  </tr>
+  <tr data-id="slM2" data-foreach-item="items" class="next_departures">
+    <td class="linenumber" data-bind="item.line"></td>
+    <td class="destination" data-bind="item.dest"></td>
+    <td class="displaytime" data-bind="item.time_left"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Line</th>
+    <th>Destination</th>
+    <th>Departs</th>
+  </tr>
+  <tr data-id="slB2" data-foreach-item="items" class="next_departures">
     <td class="linenumber" data-bind="item.line"></td>
     <td class="destination" data-bind="item.dest"></td>
     <td class="displaytime" data-bind="item.time_left"></td>
